@@ -1,69 +1,68 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    const [alumno, setAlumno] = useState("");
+    const [mostrarAyuda, setMostrarAyuda] = useState(false);
+
+    useEffect(() => {
+        document.title = "Pio Promedios - Inicio";
+    }, []);
+
+    useEffect(() => {
+        console.log("El alumno cambió:", alumno);
+    }, [alumno]);
+
+    const manejarCambio = (event) => {
+        setAlumno(event.target.value);
+    };
+
+    return (
+        <main className={styles.pagina}>
+            <div className={styles.columna}>
+                <h1>Pio Promedios</h1>
+
+                <input
+                    className={styles.input}
+                    type="text"
+                    value={alumno}
+                    onChange={manejarCambio}
+                    placeholder="Ingresá tu nombre"
+                />
+
+                {alumno === "" ? (
+                    <p className={styles.mensaje}>
+                        Por favor, ingresá tu nombre para continuar.
+                    </p>
+                ) : (
+                    <div className={styles.bienvenida}>
+                        <p>¡Hola, {alumno}!</p>
+                        <p>
+                            La calculadora de promedios se encuentra en:
+                            http://localhost:3000/notas
+                        </p>
+                    </div>
+                )}
+
+                <button
+                    className={styles.boton}
+                    onClick={() => setMostrarAyuda(!mostrarAyuda)}
+                >
+                    Mostrar/Ocultar ayuda
+                </button>
+
+                {mostrarAyuda && (
+                    <ul className={styles.ayuda}>
+                        <li>Ingresá tu nombre.</li>
+                        <li>Ingresá a la página de notas.</li>
+                        <li>Cargá tus notas entre 0 y 10.</li>
+                        <li>Podés eliminar las notas que hayas agregado.</li>
+                        <li>La aplicación calculará automáticamente el promedio.</li>
+                    </ul>
+                )}
+            </div>
+        </main>
+    );
 }
