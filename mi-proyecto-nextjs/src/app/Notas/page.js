@@ -5,7 +5,7 @@ import ListaNotas from "../../components/ListaNotas";
 import styles from "./Notas.module.css";
 
 export default function Notas() {
-    const [notas, setNotas] = useState([8, 5, 10]);
+    const [notas, setNotas] = useState([9,7, 1]);
     const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
